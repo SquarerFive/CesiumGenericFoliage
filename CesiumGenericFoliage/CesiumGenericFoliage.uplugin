@@ -1,0 +1,34 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "CesiumGenericFoliage",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "Aiden. S",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "CesiumGenericFoliage",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "GenericFoliage",
+			"Enabled": true
+		},
+		{
+			"Name": "CesiumForUnreal",
+			"Enabled": true
+		}
+	]
+}
