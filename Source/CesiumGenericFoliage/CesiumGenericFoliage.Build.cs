@@ -27,6 +27,8 @@ public class CesiumGenericFoliage : ModuleRules
 			{
 				"Core",
 				// ... add other public dependencies that you statically link with here ...
+				"CesiumRuntime",
+				"HTTP"
 			}
 			);
 			
@@ -38,8 +40,7 @@ public class CesiumGenericFoliage : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"GenericFoliage",
-				"CesiumRuntime"
+				"GenericFoliage"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
