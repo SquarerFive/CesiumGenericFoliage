@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Cesium3DTileset.h"
 #include "CesiumGeoreference.h"
 #include "Actors/ClusterFoliageActor.h"
 #include "CesiumClusterFoliageActor.generated.h"
@@ -21,7 +22,10 @@ public:
 	virtual FVector EngineToGeographicLocation(const FVector& EngineLocation) override;
 	virtual FVector GetUpVectorFromGeographicLocation(const FVector& GeographicLocation) override;
 	virtual FVector GetUpVectorFromEngineLocation(const FVector& EngineLocation) override;
+	virtual double GetTerrainBaseHeight(const FVector& GeographicLocation, FVector& OutNormal) override;
 private:
 	UPROPERTY()
-	ACesiumGeoreference* GeoReference;
+	ACesiumGeoreference* GeoReference = nullptr;
+	UPROPERTY()
+	ACesium3DTileset* Cesium3DTileset = nullptr;
 };

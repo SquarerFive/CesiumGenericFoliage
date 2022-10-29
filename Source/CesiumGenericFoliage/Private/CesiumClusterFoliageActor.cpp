@@ -16,6 +16,11 @@ void ACesiumClusterFoliageActor::BeginPlay()
 			break;
 		}
 	}
+
+	for (TActorIterator<ACesium3DTileset> ActorIter(GetWorld()); ActorIter; ++ActorIter)
+	{
+		Cesium3DTileset = *ActorIter;
+	}
 }
 
 FVector ACesiumClusterFoliageActor::GeographicToEngineLocation(const FVector& GeographicLocation)
@@ -36,4 +41,28 @@ FVector ACesiumClusterFoliageActor::GetUpVectorFromGeographicLocation(const FVec
 FVector ACesiumClusterFoliageActor::GetUpVectorFromEngineLocation(const FVector& EngineLocation)
 {
 	return GeoReference->ComputeEastNorthUpToUnreal(EngineLocation).ToQuat().GetUpVector();
+}
+
+double ACesiumClusterFoliageActor::GetTerrainBaseHeight(const FVector& GeographicLocation, FVector& OutNormal)
+{
+	TArray<FHitResult> Results;
+	const FVector StartLocation = GeographicToEngineLocation(
+		FVector(GeographicLocation.X, GeographicLocation.Y, 9000.0));
+	const FVector EndLocation =
+		GeographicToEngineLocation(FVector(GeographicLocation.X, GeographicLocation.Y, -1000.0));
+	if (GetWorld()->LineTraceMultiByChannel(Results, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility))
+	{
+		const TArray<FHitResult> HitTerrain = Results.FilterByPredicate([this](const FHitResult& Result)
+		{
+			return Result.GetActor() == Cesium3DTileset; 
+		});
+
+		if (HitTerrain.Num() > 0)
+		{
+			OutNormal = HitTerrain[0].ImpactNormal;
+			return EngineToGeographicLocation(HitTerrain[0].Location).Z;
+		}
+	}
+
+	return 0.0;
 }
