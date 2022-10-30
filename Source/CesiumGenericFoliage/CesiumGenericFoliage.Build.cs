@@ -40,6 +40,7 @@ public class CesiumGenericFoliage : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"UMG",
 				"GenericFoliage"
 				// ... add private dependencies that you statically link with here ...	
 			}
