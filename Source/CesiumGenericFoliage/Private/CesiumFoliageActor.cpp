@@ -45,7 +45,7 @@ FRotator ACesiumFoliageActor::CalculateEastNorthUp(const FVector& InWorldLocatio
 	ACesiumGeoreference* Georeference = GlobeAnchorComponent->ResolveGeoreference();
 	if (Georeference != nullptr)
 	{
-		return Georeference->ComputeEastNorthUpToUnreal(InWorldLocation).Rotator();
+		return Georeference->ComputeEastSouthUpToUnreal(InWorldLocation).Rotator();
 	}
 
 	return FRotator::ZeroRotator;
@@ -81,7 +81,7 @@ FVector ACesiumFoliageActor::AdjustWorldPositionHeightToPlanet(const FVector& In
 	
 	// World centre
 	const FVector Target = GlobeAnchorComponent->ResolveGeoreference()->TransformEcefToUnreal(FVector::ZeroVector);
-	const FQuat ENU = GlobeAnchorComponent->ResolveGeoreference()->ComputeEastNorthUpToUnreal(InWorldLocation).ToQuat();
+	const FQuat ENU = GlobeAnchorComponent->ResolveGeoreference()->ComputeEastSouthUpToUnreal(InWorldLocation).ToQuat();
 	
 	if (GetWorld()->LineTraceSingleByChannel(Result, InWorldLocation + (ENU.GetUpVector() * 4000 * 100), Target, ECollisionChannel::ECC_Visibility))
 	{

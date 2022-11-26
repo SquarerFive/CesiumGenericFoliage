@@ -35,12 +35,12 @@ FVector ACesiumClusterFoliageActor::EngineToGeographicLocation(const FVector& En
 
 FVector ACesiumClusterFoliageActor::GetUpVectorFromGeographicLocation(const FVector& GeographicLocation)
 {
-	return GeoReference->ComputeEastNorthUpToUnreal(GeographicToEngineLocation(GeographicLocation)).ToQuat().GetUpVector();
+	return GeoReference->ComputeEastSouthUpToUnreal(GeographicToEngineLocation(GeographicLocation)).ToQuat().GetUpVector();
 }
 
 FVector ACesiumClusterFoliageActor::GetUpVectorFromEngineLocation(const FVector& EngineLocation)
 {
-	return GeoReference->ComputeEastNorthUpToUnreal(EngineLocation).ToQuat().GetUpVector();
+	return GeoReference->ComputeEastSouthUpToUnreal(EngineLocation).ToQuat().GetUpVector();
 }
 
 double ACesiumClusterFoliageActor::GetTerrainBaseHeight(const FVector& GeographicLocation, FVector& OutNormal)
