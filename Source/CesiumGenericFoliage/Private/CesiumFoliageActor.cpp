@@ -45,7 +45,7 @@ FRotator ACesiumFoliageActor::CalculateEastNorthUp(const FVector& InWorldLocatio
 	ACesiumGeoreference* Georeference = GlobeAnchorComponent->ResolveGeoreference();
 	if (Georeference != nullptr)
 	{
-		return Georeference->ComputeEastSouthUpToUnreal(InWorldLocation).Rotator();
+		return Georeference->InaccurateComputeEastSouthUpToUnreal(InWorldLocation).Rotator();
 	}
 
 	return FRotator::ZeroRotator;
@@ -56,7 +56,7 @@ FVector ACesiumFoliageActor::WorldToLocalPosition(const FVector& InWorldLocation
 	ACesiumGeoreference* Georeference = GlobeAnchorComponent->ResolveGeoreference();
 	if (Georeference != nullptr)
 	{
-		return Georeference->TransformUnrealToLongitudeLatitudeHeight(InWorldLocation);
+		return Georeference->InaccurateTransformUnrealToLongitudeLatitudeHeight(InWorldLocation);
 	}
 
 	return FVector::ZeroVector;
@@ -67,7 +67,7 @@ FVector ACesiumFoliageActor::LocalToWorldPosition(const FVector& InLocalLocation
 	ACesiumGeoreference* Georeference = GlobeAnchorComponent->ResolveGeoreference();
 	if (Georeference != nullptr)
 	{
-		return Georeference->TransformLongitudeLatitudeHeightToUnreal(InLocalLocation);
+		return Georeference->InaccurateTransformLongitudeLatitudeHeightToUnreal(InLocalLocation);
 	}
 
 	return FVector::ZeroVector;
@@ -80,8 +80,8 @@ FVector ACesiumFoliageActor::AdjustWorldPositionHeightToPlanet(const FVector& In
 	FVector LocalPosition;
 	
 	// World centre
-	const FVector Target = GlobeAnchorComponent->ResolveGeoreference()->TransformEcefToUnreal(FVector::ZeroVector);
-	const FQuat ENU = GlobeAnchorComponent->ResolveGeoreference()->ComputeEastSouthUpToUnreal(InWorldLocation).ToQuat();
+	const FVector Target = GlobeAnchorComponent->ResolveGeoreference()->InaccurateTransformEcefToUnreal(FVector::ZeroVector);
+	const FQuat ENU = GlobeAnchorComponent->ResolveGeoreference()->InaccurateComputeEastSouthUpToUnreal(InWorldLocation).ToQuat();
 	
 	if (GetWorld()->LineTraceSingleByChannel(Result, InWorldLocation + (ENU.GetUpVector() * 4000 * 100), Target, ECollisionChannel::ECC_Visibility))
 	{
